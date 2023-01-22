@@ -38,8 +38,11 @@ options:
 The client requires SICStus Prolog
 
 The Prothon client can be used either directly
-`sicstus -l prothon/client/prothon.pl
+
+`sicstus -l prothon/client/prothon.pl`
+
 or as a module
+
 `:- use_module('path-to/prothon/client/prothon')`
 
 #### API
@@ -47,28 +50,40 @@ or as a module
 Proper documentation will follow
 
 >pyconnect
+>
 >pyconnect(+Address)
 >>Connects to the server. The address defaults to the localhost if omitted.
 >	
 >pycall(+Function, +Args)
+>
 >pycall(+Function, +Args, +KeywordArgs)
+>
 >pycall(+Function, +Args, +KeywordArgs, -Answer)
 >>Calls the function with the name Function, which must be an atom. If it is not a built-in, it needs to be prefixed with the module it belongs to with its name 		exactly how it was imported. Args contains all positional arguments in a list. 		KeywordArgs can either be an AVL-tree with only Prothon compatible strings as its keys or a list of key(value) pairs.
+>>
 >>Answer is unified with a Python-reference to the object the function returns and in case an exception occurred on the server it is propagated. If Answer is omitted the return value needs to be fetched manually and therefore an eventual exception is not thrown.
+>>
 >>Example:
+>>
 >>pycall(’np.array’, [[1, 2, 3]], dict([dtype(string("int"))]), NpA)
 >
 >pymethod(+Object, +Method, +Args )
+>
 >pymethod(+Object, +Method, +Args, +KeywordArgs )
+>
 >pymethod(+Object, +Method, +Args, +KeywordArgs, -Answer )
+>
 >>Works analogous to pycall except that it does call a method on the provided object.
+>>
 >>Example:
+>>
 >>pymethod(NpA, ’sort’, [], dict([axis(0)]), NpA)
 >
 >pyanswer(-Answer )
 >>Fetches the most recently returned object from the server and unifies its Python-reference with Answer. If an exception was thrown on the server while generating the object, the exception it is propagated.
 >	
 >pyimport(+Module )
+>
 >pyimport(+Module, +Alias )
 >>Imports a module into the server, with an optional alias. If an alias is used the module can only be referenced by that alias.
 >
@@ -80,13 +95,18 @@ Proper documentation will follow
 >
 >pyderef(+Object, -DerefObj )
 >>Dereferences the object turning it into a constant representation of its value. If the object is a collection its contents will not be dereferenced. Notably dereferencing a list of integers returns a list of object references to those integers and not the integers themselves.
+>>
 >>Examples:
+>>
 >>pyderef(Subplot, tuple([Fig, Ax]))
+>>
 >>pyderef(NpA, [E1, E2, E3])
 >
 >pyderefall(+Object, -DerefObj )
 >>Dereferences the object turning it into a constant representation of its value. For collections this is done recursively.
+>>
 >>Example:
+>>
 >>pyderefall(Npa, [1, 2, 3])
 
 ## Security
